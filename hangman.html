@@ -1,0 +1,115 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Hangman Game</title>
+    <meta name="description" content="Hangman Game">
+    <meta name="Thomas Dunn" content="UCF BootCamp">
+
+    <!-- <link rel="stylesheet" href="css/styles.css?v=1.0"> -->
+    <!-- Jquery hook -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+        </script> 
+</head>
+
+<body>
+    <h1>THE HANGMAN GAME</h1>
+    <h2>Enter you guess: </h2>
+    <div> id="guesses">
+        <p>the guess array should go here</p>
+    </div>
+
+    <script type="text/javascript">
+        // Initialize global variables 
+        var wordArray = ['animal', 'vegetable', 'mineral', 'liguid', 'oxygen', 'granite', 'zoology', 'programmer', 'vacation', 'recreation', 'elephant', 'crocodile'];
+        var wrong_guesses = 0;
+        var guess_count = 0;
+        var lettersLeft = 0;
+        var target_word = " ";
+        var target_word = wordArray[Math.floor(Math.random() * wordArray.length)];
+        var max_guesses = target_word.length;
+        var scrnArray = [];
+        var scrnResult =" ";
+        var correct_guess = 0;
+        //
+        //
+        for (var s = 0; s <= target_word.length + 4; s=s + 2) {
+            scrnArray[s] = "_";
+            scrnArray[s + 1] = "#";
+        }
+        scrnResult = scrnArray.toString();
+        // document.querySelector("#guesses").innerHTML = scrnResult;
+        console.log("Target Word is: " + target_word);
+        console.log("The length of current word is: " + target_word.length);
+        console.log("THe length of scrnArray is; " + scrnArray.length);
+        console.log(" Initial screen display " + scrnResult);
+        console.log(" Array status: " + scrnResult);
+
+   
+
+        // Get guess from user
+        document.onkeyup = function (event) {
+            var user_input = event.key;
+            var matched = "false";
+            guess_count++;
+            console.log("user entered: " + user_input);
+            for (i = 0; i < target_word.length; i++) {
+                if (target_word[i] == user_input) {
+                    scrnArray.splice(i, 1, user_input);
+                    match = "true";
+                    console.log("correct guess at position: " + i);
+                }
+
+            }
+            if (matched = "true") {
+                correct_guess++;
+            } else {
+                wrong_guesses++;
+            }
+            scrnResult = scrnArray.toString();
+            console.log(" Array status: " + scrnResult);
+        }
+         // check to see if any letters have not been guessed
+        for (var n = 0; n <= scrnArray.length; n++) {
+            if (scrnArray[n] == "_") {
+                lettersLeft++;
+            }
+        }
+        console.log("# of guesses allowed: " + max_guesses + "   Guesses made: " + guess_count + "   # of correct guesses: " + correct_guess + "     # of wrong guesses; " + wrong_guesses);
+        console.log(" Letters left to guess - a number greater than or equal to zero means not all letters have been guessed correctly: " + lettersLeft);
+        for (var y = 0; y < scrnArray.length; y++) {
+            console.log("Letters guessed; " + y + " " + scrnArray[y]);
+        }
+       
+
+
+        console.log("Max_Guesses = " + max_guesses + " Letters left= " + lettersLeft);
+        if ((max_guesses < wrong_guesses) && (lettersLeft < 0)) {
+            console.log("Congratulations... you WIN!");
+        }
+        else if ((wrong_guesses > max_guesses) && (lettersLeft > 0)) {
+            console.log("Sorry you lose, please try again");
+        }
+
+    
+    </script>
+</body>
+
+</html>    
